@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { colors } from '@/styles/colors';
 
 export default function Dashboard() {
+  const router = useRouter();
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   const [currentBanner, setCurrentBanner] = useState(0);
 
@@ -165,6 +167,11 @@ export default function Dashboard() {
           {filteredProducts.map((product, index) => (
             <div
               key={index}
+              onClick={() => {
+                if (product.type === 'cuentas') {
+                  router.push(`/cuentas/${product.accountNumber}`);
+                }
+              }}
               className="bg-white rounded-2xl p-6 cursor-pointer"
             >
               <div className="flex justify-between items-start mb-4">
