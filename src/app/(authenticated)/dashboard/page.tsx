@@ -1,12 +1,39 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { colors } from '@/styles/colors';
 
+interface Account {
+  id: string;
+  userId: string;
+  accountNumber: string;
+  accountType: string;
+  currency: string;
+  balance: number;
+  availableBalance: number;
+  holdBalance: number;
+  status: string;
+  nickname: string;
+  interestRate: number;
+}
+
+interface Product {
+  title: string;
+  subtitle: string;
+  accountNumber: string;
+  balance: string;
+  icon: string;
+  type: string;
+}
+
 export default function Dashboard() {
+  const router = useRouter();
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   const [currentBanner, setCurrentBanner] = useState(0);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const banners = [
     '/banner/banner-1.png',
@@ -23,52 +50,78 @@ export default function Dashboard() {
     { label: 'Inversiones', icon: '/icon/custom/bank.svg', value: 'inversiones' },
   ];
 
-  const products = [
-    {
-      title: 'Primera casa',
-      subtitle: 'Cuenta de ahorro',
-      accountNumber: '001010286647359',
-      balance: 'RD$ 248,556.32',
-      icon: '/icon/custom/pig.svg',
-      type: 'cuentas',
-    },
-    {
-      title: 'Fondo de emergencia',
-      subtitle: 'Cuenta corriente',
-      accountNumber: '001008093080569',
-      balance: 'RD$ 18,400.07',
-      icon: '/icon/custom/pig.svg',
-      type: 'cuentas',
-    },
-    {
-      title: 'Visa Platinum',
-      subtitle: 'Tarjeta de crédito',
-      accountNumber: '4532 **** **** 8901',
-      balance: 'RD$ 145,000.00',
-      icon: '/icon/custom/card.svg',
-      type: 'tarjetas',
-    },
-    {
-      title: 'Préstamo personal',
-      subtitle: 'Préstamo',
-      accountNumber: '001012345678901',
-      balance: 'RD$ 320,450.00',
-      icon: '/icon/custom/loans.svg',
-      type: 'prestamos',
-    },
-    {
-      title: 'Certificado Financiero',
-      subtitle: 'Inversión a plazo',
-      accountNumber: '001019876543210',
-      balance: 'RD$ 500,000.00',
-      icon: '/icon/custom/bank.svg',
-      type: 'inversiones',
-    },
-  ];
+  useEffect(() => {
+    // Cargar cuentas, tarjetas y préstamos desde el mock data
+    Promise.all([
+      fetch('/mock_data/accounts.json').then(res => res.json()),
+      fetch('/mock_data/cards.json').then(res => res.json()),
+      fetch('/mock_data/loans.json').then(res => res.json()),
+    ])
+      .then(([accountsData, cardsData, loansData]) => {
+        const accountProducts: Product[] = accountsData.accounts.map((account: Account) => ({
+          title: account.nickname || 'Mi Cuenta',
+          subtitle: account.accountType,
+          accountNumber: account.accountNumber,
+          balance: `RD$ ${account.balance.toLocaleString('es-DO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+          icon: '/icon/custom/pig.svg',
+          type: 'cuentas',
+        }));
+
+        const cardProducts: Product[] = cardsData.cards.map((card: any) => ({
+          title: card.nickname,
+          subtitle: `Tarjeta de ${card.cardType.toLowerCase()}`,
+          accountNumber: card.cardNumber,
+          balance: card.cardType === 'CREDITO'
+            ? `RD$ ${(card.availableCredit || 0).toLocaleString('es-DO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+            : 'Tarjeta de débito',
+          icon: '/icon/custom/card.svg',
+          type: 'tarjetas',
+        }));
+
+        const loanProducts: Product[] = loansData.loans.map((loan: any) => ({
+          title: loan.nickname || loan.purpose,
+          subtitle: 'Préstamo',
+          accountNumber: loan.loanNumber || loan.id,
+          balance: `RD$ ${loan.outstandingBalance.toLocaleString('es-DO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+          icon: '/icon/custom/loans.svg',
+          type: 'prestamos',
+        }));
+
+        // Productos adicionales (inversiones) - mantener los ejemplos
+        const otherProducts: Product[] = [
+          {
+            title: 'Certificado Financiero',
+            subtitle: 'Inversión a plazo',
+            accountNumber: '001019876543210',
+            balance: 'RD$ 500,000.00',
+            icon: '/icon/custom/bank.svg',
+            type: 'inversiones',
+          },
+        ];
+
+        setProducts([...accountProducts, ...cardProducts, ...loanProducts, ...otherProducts]);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error loading products:', error);
+        setLoading(false);
+      });
+  }, []);
 
   const filteredProducts = selectedFilter
     ? products.filter((p) => p.type === selectedFilter)
     : products;
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: colors.background }}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4" style={{ borderColor: colors.primary }}></div>
+          <p style={{ color: colors.textSecondary }}>Cargando productos...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: colors.background }}>
@@ -165,6 +218,15 @@ export default function Dashboard() {
           {filteredProducts.map((product, index) => (
             <div
               key={index}
+              onClick={() => {
+                if (product.type === 'cuentas') {
+                  router.push(`/cuentas/${product.accountNumber}`);
+                } else if (product.type === 'tarjetas') {
+                  router.push(`/tarjetas/${product.accountNumber}`);
+                } else if (product.type === 'prestamos') {
+                  router.push(`/prestamos/${product.accountNumber}`);
+                }
+              }}
               className="bg-white rounded-2xl p-6 cursor-pointer"
             >
               <div className="flex justify-between items-start mb-4">

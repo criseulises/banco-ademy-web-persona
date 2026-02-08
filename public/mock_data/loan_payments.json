@@ -1,0 +1,124 @@
+{
+  "loanPayments": [
+    {
+      "id": "lp_001",
+      "loanId": "loan_005",
+      "paymentNumber": 1,
+      "amount": 3204.63,
+      "principal": 2537.96,
+      "interest": 666.67,
+      "dueDate": "2024-09-26",
+      "paidDate": "2024-09-24",
+      "status": "PAID",
+      "reference": "49443946738195107"
+    },
+    {
+      "id": "lp_002",
+      "loanId": "loan_005",
+      "paymentNumber": 2,
+      "amount": 3204.63,
+      "principal": 2558.53,
+      "interest": 646.10,
+      "dueDate": "2024-10-26",
+      "paidDate": "2024-10-26",
+      "status": "PAID",
+      "reference": "49443946738195107"
+    },
+    {
+      "id": "lp_003",
+      "loanId": "loan_005",
+      "paymentNumber": 3,
+      "amount": 3204.63,
+      "principal": 2579.32,
+      "interest": 625.31,
+      "dueDate": "2025-04-26",
+      "paidDate": "2025-04-26",
+      "status": "PAID",
+      "reference": "99472485846592136"
+    },
+    {
+      "id": "lp_004",
+      "loanId": "loan_005",
+      "paymentNumber": 4,
+      "amount": 3204.63,
+      "principal": 2600.32,
+      "interest": 604.31,
+      "dueDate": "2025-05-24",
+      "paidDate": "2025-05-24",
+      "status": "PAID",
+      "reference": "32311573409894302"
+    },
+    {
+      "id": "lp_005",
+      "loanId": "loan_005",
+      "paymentNumber": 5,
+      "amount": 3204.63,
+      "principal": 2621.54,
+      "interest": 583.09,
+      "dueDate": "2025-06-26",
+      "paidDate": null,
+      "status": "PENDING",
+      "reference": "0748458839155391"
+    },
+    {
+      "id": "lp_006",
+      "loanId": "loan_005",
+      "paymentNumber": 6,
+      "amount": 3204.63,
+      "principal": 2642.98,
+      "interest": 561.65,
+      "dueDate": "2025-07-26",
+      "paidDate": null,
+      "status": "PENDING",
+      "reference": "0748458839155392"
+    },
+    {
+      "id": "lp_007",
+      "loanId": "loan_005",
+      "paymentNumber": 7,
+      "amount": 3204.63,
+      "principal": 2664.64,
+      "interest": 539.99,
+      "dueDate": "2025-08-26",
+      "paidDate": null,
+      "status": "PENDING",
+      "reference": "0748458839155393"
+    },
+    {
+      "id": "lp_008",
+      "loanId": "loan_005",
+      "paymentNumber": 8,
+      "amount": 3204.63,
+      "principal": 2686.53,
+      "interest": 518.10,
+      "dueDate": "2025-09-26",
+      "paidDate": null,
+      "status": "PENDING",
+      "reference": "0748458839155394"
+    },
+    {
+      "id": "lp_009",
+      "loanId": "loan_005",
+      "paymentNumber": 9,
+      "amount": 3204.63,
+      "principal": 2708.66,
+      "interest": 495.97,
+      "dueDate": "2025-10-26",
+      "paidDate": null,
+      "status": "PENDING",
+      "reference": "0748458839155395"
+    },
+    {
+      "id": "lp_010",
+      "loanId": "loan_005",
+      "paymentNumber": 10,
+      "amount": 3204.63,
+      "principal": 2731.02,
+      "interest": 473.61,
+      "dueDate": "2025-11-26",
+      "paidDate": null,
+      "status": "PENDING",
+      "reference": "0748458839155396"
+    }
+  ]
+}

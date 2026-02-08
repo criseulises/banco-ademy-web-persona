@@ -1,7 +1,7 @@
 // app/(authenticated)/layout.tsx
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { Header } from "@/components/layout/Header";
 import { FloatingChatButton } from "@/components/chat/FloatingChatButton";
 import { ChatModal } from "@/components/chat/ChatModal";
@@ -15,11 +15,25 @@ export default function AuthenticatedLayout({
   children,
 }: AuthenticatedLayoutProps) {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  useEffect(() => {
+    // Cargar el conteo de notificaciones no leídas
+    fetch('/mock_data/notifications.json')
+      .then(res => res.json())
+      .then(data => {
+        const unreadCount = data.notifications.filter((n: any) => !n.isRead).length;
+        setNotificationCount(unreadCount);
+      })
+      .catch(error => {
+        console.error('Error loading notification count:', error);
+      });
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header - Full width */}
-      <Header notificationCount={3} />
+      <Header notificationCount={notificationCount} />
 
       {/* Main Content Area */}
       <div className="flex-1 flex overflow-hidden">

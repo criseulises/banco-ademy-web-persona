@@ -103,6 +103,32 @@
       "paymentDay": 15,
       "lastPaymentDate": "2026-02-15",
       "lastPaymentAmount": 5000.00
+    },
+    {
+      "id": "loan_005",
+      "userId": "user_001",
+      "loanType": "PERSONAL",
+      "amount": 32000.00,
+      "currency": "DOP",
+      "disbursedAmount": 32000.00,
+      "outstandingBalance": 19200.13,
+      "interestRate": 10.0,
+      "monthlyPayment": 3204.63,
+      "totalPayments": 10,
+      "paidPayments": 4,
+      "remainingPayments": 6,
+      "overduePayments": 0,
+      "nextPaymentDate": "2025-06-26",
+      "startDate": "2024-08-26",
+      "endDate": "2025-11-26",
+      "status": "ACTIVE",
+      "purpose": "Préstamo lavadora",
+      "nickname": "Préstamo lavadora",
+      "loanNumber": "022-4848391556",
+      "guaranteeType": "FIADOR",
+      "paymentDay": 26,
+      "lastPaymentDate": "2025-05-24",
+      "lastPaymentAmount": 3204.63
     }
   ]
 }

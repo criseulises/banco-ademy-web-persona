@@ -34,7 +34,7 @@ export const Header: React.FC<HeaderProps> = ({
     if (onNotificationsClick) {
       onNotificationsClick();
     } else {
-      router.push("/notifications");
+      router.push("/notificaciones");
     }
   };
 
