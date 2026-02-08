@@ -1,8 +1,10 @@
+// src/app/(authenticated)/dashboard/page.tsx
 "use client";
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AuthService } from "@/features/auth/services/authService";
+import LogoutButton from "@/components/auth/LogoutButton";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -14,11 +16,6 @@ export default function DashboardPage() {
     }
   }, [router]);
 
-  const handleLogout = async () => {
-    await AuthService.logout();
-    router.push("/login");
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -27,12 +24,7 @@ export default function DashboardPage() {
             <h1 className="text-3xl font-bold text-text">
               Dashboard - Banco ADEMI
             </h1>
-            <button
-              onClick={handleLogout}
-              className="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-secondary/90 transition-colors"
-            >
-              Cerrar Sesión
-            </button>
+            <LogoutButton variant="secondary" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -28,15 +28,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     error: null,
   });
 
-  // Verificar autenticación al cargar - SOLO UNA VEZ
+  // Verificar autenticación al cargar
   useEffect(() => {
     const checkAuth = () => {
       try {
-        const isAuth = AuthService.isAuthenticated();
-        const token = AuthService.getToken();
+        // Verificar tanto cookies como localStorage para compatibilidad
+        const token = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('auth_token='))
+          ?.split('=')[1] || AuthService.getToken();
 
-        if (isAuth && token) {
-          // Obtener usuario de localStorage si existe
+        if (token) {
           const storedUser = localStorage.getItem("user");
           const user = storedUser ? JSON.parse(storedUser) : null;
           
@@ -68,14 +70,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     };
 
-    // Solo verificar en el cliente
     if (typeof window !== "undefined") {
       checkAuth();
     }
-  }, []); // Array de dependencias vacío para ejecutar solo una vez
+  }, []);
 
   const login = (token: string, user: LoginResponse["user"]) => {
-    // Guardar usuario en localStorage
+    // Guardar en localStorage y cookies para consistencia
     if (user && typeof window !== "undefined") {
       localStorage.setItem("user", JSON.stringify(user));
     }
@@ -91,11 +92,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = async () => {
     try {
-      await AuthService.logout();
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("user");
-      }
-      
+      // Limpiar todo de manera sincrónica primero
       setAuthState({
         isAuthenticated: false,
         user: null,
@@ -104,9 +101,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         error: null,
       });
       
-      router.push(appConfig.routes.public.login);
+      // Limpiar localStorage
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("user");
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("refresh_token");
+      }
+      
+      // Limpiar cookies
+      document.cookie = "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      document.cookie = "refresh_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      
+      // Llamar al servicio de logout
+      await AuthService.logout();
+      
+      // Redirigir usando window.location para forzar recarga
+      window.location.href = appConfig.routes.public.login;
+      
     } catch (error) {
       console.error("Error during logout:", error);
+      // Si falla, igualmente limpiar y redirigir
+      if (typeof window !== "undefined") {
+        window.location.href = appConfig.routes.public.login;
+      }
     }
   };
 
@@ -136,11 +153,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-/**
- * Hook para usar el contexto de autenticación
- * @returns Contexto de autenticación
- * @throws Error si se usa fuera del AuthProvider
- */
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
