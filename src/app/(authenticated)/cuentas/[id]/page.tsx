@@ -198,145 +198,159 @@ export default function AccountDetailsPage() {
 
         {/* Movements Section - Full Width */}
         <div className="bg-white rounded-2xl p-6">
-              <h3 className="text-2xl font-bold mb-4" style={{ color: colors.textPrimary }}>
-                Movimientos
-              </h3>
+          <h3 className="text-2xl font-bold mb-4" style={{ color: colors.textPrimary }}>
+            Movimientos
+          </h3>
 
-              {/* Filter Tabs */}
-              <div className="flex gap-3 mb-6">
-                <button
-                  onClick={() => setSelectedFilter('todo')}
-                  className={`px-4 py-2 rounded-lg border-2 transition-all ${
-                    selectedFilter === 'todo' ? 'font-semibold' : ''
-                  }`}
+          {/* Filter Tabs */}
+          <div className="flex gap-3 mb-6">
+            <button
+              onClick={() => setSelectedFilter('todo')}
+              className={`px-4 py-2 rounded-lg border-2 transition-all ${selectedFilter === 'todo' ? 'font-semibold' : ''
+                }`}
+              style={{
+                borderColor: selectedFilter === 'todo' ? '#FA6C26' : colors.grey300,
+                backgroundColor: selectedFilter === 'todo' ? '#FA6C2610' : 'white',
+                color: selectedFilter === 'todo' ? '#FA6C26' : colors.grey600,
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <Image
+                  src="/icon/tabler/tabler-icon-arrows-exchange-2.svg"
+                  alt="Todo"
+                  width={16}
+                  height={16}
                   style={{
-                    borderColor: selectedFilter === 'todo' ? '#FA6C26' : colors.grey300,
-                    backgroundColor: selectedFilter === 'todo' ? '#FA6C2610' : 'white',
-                    color: selectedFilter === 'todo' ? '#FA6C26' : colors.grey600,
+                    filter: selectedFilter === 'todo'
+                      ? 'brightness(0) saturate(100%) invert(58%) sepia(94%) saturate(3583%) hue-rotate(352deg) brightness(100%) contrast(97%)'
+                      : 'brightness(0) saturate(0%) brightness(60%)',
                   }}
-                >
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src="/icon/tabler/tabler-icon-arrows-exchange-2.svg"
-                      alt="Todo"
-                      width={16}
-                      height={16}
-                      style={{
-                        filter: selectedFilter === 'todo'
-                          ? 'brightness(0) saturate(100%) invert(58%) sepia(94%) saturate(3583%) hue-rotate(352deg) brightness(100%) contrast(97%)'
-                          : 'brightness(0) saturate(0%) brightness(60%)',
-                      }}
-                    />
-                    <span>Todo</span>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => setSelectedFilter('credito')}
-                  className={`px-4 py-2 rounded-lg border-2 transition-all ${
-                    selectedFilter === 'credito' ? 'font-semibold' : ''
-                  }`}
-                  style={{
-                    borderColor: selectedFilter === 'credito' ? '#FA6C26' : colors.grey300,
-                    backgroundColor: selectedFilter === 'credito' ? '#FA6C2610' : 'white',
-                    color: selectedFilter === 'credito' ? '#FA6C26' : colors.grey600,
-                  }}
-                >
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src="/icon/tabler/tabler-icon-arrow-bar-up.svg"
-                      alt="Crédito"
-                      width={16}
-                      height={16}
-                      style={{
-                        filter: selectedFilter === 'credito'
-                          ? 'brightness(0) saturate(100%) invert(58%) sepia(94%) saturate(3583%) hue-rotate(352deg) brightness(100%) contrast(97%)'
-                          : 'brightness(0) saturate(0%) brightness(60%)',
-                      }}
-                    />
-                    <span>Crédito</span>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => setSelectedFilter('debito')}
-                  className={`px-4 py-2 rounded-lg border-2 transition-all ${
-                    selectedFilter === 'debito' ? 'font-semibold' : ''
-                  }`}
-                  style={{
-                    borderColor: selectedFilter === 'debito' ? '#FA6C26' : colors.grey300,
-                    backgroundColor: selectedFilter === 'debito' ? '#FA6C2610' : 'white',
-                    color: selectedFilter === 'debito' ? '#FA6C26' : colors.grey600,
-                  }}
-                >
-                  <div className="flex items-center gap-2">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M12 5v14M19 12l-7 7-7-7" />
-                    </svg>
-                    <span>Débito</span>
-                  </div>
-                </button>
+                />
+                <span>Todo</span>
               </div>
+            </button>
 
-              {/* Transactions List */}
-              <div className="space-y-4">
-                {filteredTransactions.map((transaction) => {
-                  const displayType = getTransactionDisplayType(transaction.type);
-                  return (
+            <button
+              onClick={() => setSelectedFilter('credito')}
+              className={`px-4 py-2 rounded-lg border-2 transition-all ${selectedFilter === 'credito' ? 'font-semibold' : ''
+                }`}
+              style={{
+                borderColor: selectedFilter === 'credito' ? '#FA6C26' : colors.grey300,
+                backgroundColor: selectedFilter === 'credito' ? '#FA6C2610' : 'white',
+                color: selectedFilter === 'credito' ? '#FA6C26' : colors.grey600,
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <Image
+                  src="/icon/tabler/tabler-icon-arrow-bar-up.svg"
+                  alt="Crédito"
+                  width={16}
+                  height={16}
+                  style={{
+                    filter: selectedFilter === 'credito'
+                      ? 'brightness(0) saturate(100%) invert(58%) sepia(94%) saturate(3583%) hue-rotate(352deg) brightness(100%) contrast(97%)'
+                      : 'brightness(0) saturate(0%) brightness(60%)',
+                  }}
+                />
+                <span>Crédito</span>
+              </div>
+            </button>
+
+            <button
+              onClick={() => setSelectedFilter('debito')}
+              className={`px-4 py-2 rounded-lg border-2 transition-all ${selectedFilter === 'debito' ? 'font-semibold' : ''
+                }`}
+              style={{
+                borderColor: selectedFilter === 'debito' ? '#FA6C26' : colors.grey300,
+                backgroundColor: selectedFilter === 'debito' ? '#FA6C2610' : 'white',
+                color: selectedFilter === 'debito' ? '#FA6C26' : colors.grey600,
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 5v14M19 12l-7 7-7-7" />
+                </svg>
+                <span>Débito</span>
+              </div>
+            </button>
+          </div>
+
+          {/* Transactions List */}
+          <div className="space-y-4">
+            {filteredTransactions.map((transaction) => {
+              const displayType = getTransactionDisplayType(transaction.type);
+              return (
+                <div
+                  key={transaction.id}
+                  className="flex items-center justify-between py-3 border-b last:border-b-0"
+                  style={{ borderColor: colors.grey200 }}
+                >
+                  <div className="flex items-center gap-4">
                     <div
-                      key={transaction.id}
-                      className="flex items-center justify-between py-3 border-b last:border-b-0"
-                      style={{ borderColor: colors.grey200 }}
+                      className="w-10 h-10 rounded-full flex items-center justify-center"
+                      style={{
+                        backgroundColor: displayType === 'credito' ? '#0095A920' : '#FF444420',
+                      }}
                     >
-                      <div className="flex items-center gap-4">
-                        <div
-                          className="w-10 h-10 rounded-full flex items-center justify-center"
-                          style={{
-                            backgroundColor: displayType === 'credito' ? '#0095A920' : '#FF444420',
-                          }}
+                      {displayType === 'credito' ? (
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#0095A9"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         >
-                          <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke={displayType === 'credito' ? '#0095A9' : '#FF4444'}
-                            strokeWidth="2"
-                          >
-                            {displayType === 'credito' ? (
-                              <path d="M12 19V5M5 12l7-7 7 7" />
-                            ) : (
-                              <path d="M12 5v14M19 12l-7 7-7-7" />
-                            )}
-                          </svg>
-                        </div>
-                        <div>
-                          <p className="font-bold" style={{ color: colors.textPrimary }}>
-                            {transaction.description}
-                          </p>
-                          <p className="text-sm" style={{ color: colors.grey500 }}>
-                            {transaction.reference}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="text-right">
-                        <p
-                          className="text-lg font-bold"
-                          style={{
-                            color: displayType === 'credito' ? '#0095A9' : '#FF4444',
-                          }}
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <polyline points="3 17 9 11 13 15 21 7" />
+                          <polyline points="14 7 21 7 21 14" />
+                        </svg>
+                      ) : (
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#FF4444"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         >
-                          {displayType === 'credito' ? '+' : '-'}RD$ {transaction.amount.toLocaleString('es-DO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                        </p>
-                        <p className="text-sm" style={{ color: colors.grey500 }}>
-                          {formatRelativeDate(transaction.date)}
-                        </p>
-                      </div>
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <polyline points="3 7 9 13 13 9 21 17" />
+                          <polyline points="21 10 21 17 14 17" />
+                        </svg>
+                      )}
                     </div>
-                  );
-                })}
-              </div>
+                    <div>
+                      <p className="font-bold" style={{ color: colors.textPrimary }}>
+                        {transaction.description}
+                      </p>
+                      <p className="text-sm" style={{ color: colors.grey500 }}>
+                        {transaction.reference}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="text-right">
+                    <p
+                      className="text-lg font-bold"
+                      style={{
+                        color: displayType === 'credito' ? '#0095A9' : '#FF4444',
+                      }}
+                    >
+                      {displayType === 'credito' ? '+' : '-'}RD$ {transaction.amount.toLocaleString('es-DO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </p>
+                    <p className="text-sm" style={{ color: colors.grey500 }}>
+                      {formatRelativeDate(transaction.date)}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
