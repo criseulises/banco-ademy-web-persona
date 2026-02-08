@@ -1,0 +1,101 @@
+{
+  "notifications": [
+    {
+      "id": "notif_001",
+      "userId": "user_001",
+      "type": "PRESTAMO",
+      "title": "Tu préstamo de RD$ 250,000.00 ha sido aprobado",
+      "message": "Tu préstamo de RD$ 250,000.00 ha sido aprobado",
+      "date": "2026-02-07T10:26:00Z",
+      "isRead": false,
+      "priority": "HIGH",
+      "icon": "loan",
+      "actionUrl": "/loans/loan_001"
+    },
+    {
+      "id": "notif_002",
+      "userId": "user_001",
+      "type": "ALERTA",
+      "title": "Recuerda pagar tu préstamo \"Préstamo lavadora\"",
+      "message": "Recuerda pagar tu préstamo Préstamo lavadora",
+      "date": "2026-02-07T08:30:00Z",
+      "isRead": false,
+      "priority": "NORMAL",
+      "icon": "alert",
+      "actionUrl": "/loans/loan_002"
+    },
+    {
+      "id": "notif_003",
+      "userId": "user_001",
+      "type": "EVENTO",
+      "title": "Recuerda asistir a la charla del ahorro hoy a las 3 p.m.",
+      "message": "Recuerda asistir a la charla del ahorro hoy a las 3 p.m.",
+      "date": "2026-02-06T09:00:00Z",
+      "isRead": true,
+      "priority": "NORMAL",
+      "icon": "event",
+      "actionUrl": "/events/event_001"
+    },
+    {
+      "id": "notif_004",
+      "userId": "user_001",
+      "type": "PRESTAMO",
+      "title": "Su solicitud de préstamo de RD$ 250,000.00 está en proceso",
+      "message": "Su solicitud de préstamo de RD$ 250,000.00 está en proceso",
+      "date": "2026-02-06T08:00:00Z",
+      "isRead": true,
+      "priority": "HIGH",
+      "icon": "loan",
+      "actionUrl": "/loans/loan_001",
+      "isHighlighted": true
+    },
+    {
+      "id": "notif_005",
+      "userId": "user_001",
+      "type": "EVENTO",
+      "title": "¡Únete a nuestra charla del ahorro! Toca aquí para saber más",
+      "message": "¡Únete a nuestra charla del ahorro! Toca aquí para saber más",
+      "date": "2025-06-24T09:00:00Z",
+      "isRead": true,
+      "priority": "NORMAL",
+      "icon": "event",
+      "actionUrl": "/events/event_002"
+    },
+    {
+      "id": "notif_006",
+      "userId": "user_001",
+      "type": "PROMOCION",
+      "title": "¡Aprovecha nuestra feria de préstamos a baja tasa de interés!",
+      "message": "¡Aprovecha nuestra feria de préstamos a baja tasa de interés!",
+      "date": "2025-06-24T09:00:00Z",
+      "isRead": true,
+      "priority": "NORMAL",
+      "icon": "promotion",
+      "actionUrl": "/loans/promotion"
+    },
+    {
+      "id": "notif_007",
+      "userId": "user_001",
+      "type": "INFORMACION",
+      "title": "¿Te interesa organizar mejor tu presupuesto? ¡Toca aquí!",
+      "message": "¿Te interesa organizar mejor tu presupuesto? ¡Toca aquí!",
+      "date": "2025-06-24T09:00:00Z",
+      "isRead": true,
+      "priority": "NORMAL",
+      "icon": "info",
+      "actionUrl": "/tools/budget"
+    },
+    {
+      "id": "notif_008",
+      "userId": "user_001",
+      "type": "ALERTA",
+      "title": "Se acerca la fecha de pago de tu préstamo \"Préstamo lavadora\"",
+      "message": "Se acerca la fecha de pago de tu préstamo Préstamo lavadora",
+      "date": "2025-06-22T08:00:00Z",
+      "isRead": true,
+      "priority": "NORMAL",
+      "icon": "alert",
+      "actionUrl": "/loans/loan_002"
+    }
+  ]
+}

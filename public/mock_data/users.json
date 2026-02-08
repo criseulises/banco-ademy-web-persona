@@ -1,0 +1,82 @@
+{
+  "users": [
+    {
+      "id": "user_001",
+      "documentId": "001-1234567-8",
+      "documentType": "CEDULA",
+      "firstName": "Juan",
+      "lastName": "Pérez García",
+      "email": "juan.perez@email.com",
+      "phone": "(809) 555-1234",
+      "dateOfBirth": "1985-03-15",
+      "gender": "M",
+      "address": {
+        "street": "Av. Winston Churchill #45",
+        "city": "Santo Domingo",
+        "province": "Distrito Nacional",
+        "postalCode": "10101",
+        "country": "República Dominicana"
+      },
+      "profileImage": "https://i.pravatar.cc/150?u=user_001",
+      "pin": "1234",
+      "biometricEnabled": true,
+      "twoFactorEnabled": true,
+      "registeredAt": "2024-01-15T10:30:00Z",
+      "lastLogin": "2026-02-07T08:15:00Z",
+      "status": "ACTIVE",
+      "deviceId": "device_001"
+    },
+    {
+      "id": "user_002",
+      "documentId": "001-9876543-2",
+      "documentType": "CEDULA",
+      "firstName": "María",
+      "lastName": "Rodríguez Santos",
+      "email": "maria.rodriguez@email.com",
+      "phone": "(809) 555-5678",
+      "dateOfBirth": "1990-07-22",
+      "gender": "F",
+      "address": {
+        "street": "Calle El Conde #123",
+        "city": "Santo Domingo",
+        "province": "Distrito Nacional",
+        "postalCode": "10102",
+        "country": "República Dominicana"
+      },
+      "profileImage": "https://i.pravatar.cc/150?u=user_002",
+      "pin": "5678",
+      "biometricEnabled": true,
+      "twoFactorEnabled": false,
+      "registeredAt": "2024-06-20T14:45:00Z",
+      "lastLogin": "2026-02-06T19:30:00Z",
+      "status": "ACTIVE",
+      "deviceId": "device_002"
+    },
+    {
+      "id": "user_003",
+      "documentId": "001-5555555-5",
+      "documentType": "CEDULA",
+      "firstName": "Carlos",
+      "lastName": "Martínez López",
+      "email": "carlos.martinez@email.com",
+      "phone": "(809) 555-9999",
+      "dateOfBirth": "1978-11-30",
+      "gender": "M",
+      "address": {
+        "street": "Av. 27 de Febrero #789",
+        "city": "Santiago",
+        "province": "Santiago",
+        "postalCode": "51000",
+        "country": "República Dominicana"
+      },
+      "profileImage": "https://i.pravatar.cc/150?u=user_003",
+      "pin": "9999",
+      "biometricEnabled": false,
+      "twoFactorEnabled": true,
+      "registeredAt": "2023-03-10T09:00:00Z",
+      "lastLogin": "2026-02-05T12:20:00Z",
+      "status": "ACTIVE",
+      "deviceId": "device_003"
+    }
+  ]
+}
