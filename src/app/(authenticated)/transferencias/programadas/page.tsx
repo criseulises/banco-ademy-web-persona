@@ -8,6 +8,7 @@ interface ScheduledTransfer {
   id: string;
   userId: string;
   type: 'PROPIA' | 'TERCERO';
+  metodo?: 'ACH' | 'LBTR';
   origenAccountId: string;
   origenNickname: string;
   origenAccountNumber: string;
@@ -47,6 +48,7 @@ interface Beneficiary {
 }
 
 type TransferType = 'PROPIA' | 'TERCERO';
+type Metodo = 'ACH' | 'LBTR';
 type Frecuencia = 'DIARIA' | 'SEMANAL' | 'QUINCENAL' | 'MENSUAL';
 
 function formatCurrency(amount: number) {
@@ -285,6 +287,7 @@ export default function TransferenciasProgramadas() {
 
   // Add form state
   const [addType, setAddType] = useState<TransferType>('PROPIA');
+  const [addMetodo, setAddMetodo] = useState<Metodo>('ACH');
   const [addOrigen, setAddOrigen] = useState('');
   const [addDestinoCuenta, setAddDestinoCuenta] = useState('');
   const [addDestinoBeneficiario, setAddDestinoBeneficiario] = useState('');
@@ -327,6 +330,7 @@ export default function TransferenciasProgramadas() {
 
   const resetAddForm = () => {
     setAddType('PROPIA');
+    setAddMetodo('ACH');
     setAddOrigen('');
     setAddDestinoCuenta('');
     setAddDestinoBeneficiario('');
@@ -345,6 +349,7 @@ export default function TransferenciasProgramadas() {
     if (addType === 'TERCERO' && !addDestinoBeneficiario) errs.destino = 'Selecciona un beneficiario';
     if (addType === 'PROPIA' && addOrigen && addDestinoCuenta && addOrigen === addDestinoCuenta)
       errs.destino = 'La cuenta destino debe ser diferente a la origen';
+    if (addType === 'TERCERO' && !addMetodo) errs.metodo = 'Selecciona un método';
     if (!addMonto || parseFloat(addMonto) <= 0) errs.monto = 'Ingresa un monto válido';
     if (!addStartDate) errs.startDate = 'Selecciona una fecha de inicio';
     setAddErrors(errs);
@@ -377,6 +382,7 @@ export default function TransferenciasProgramadas() {
       id: `sched_${Date.now()}`,
       userId: 'user_001',
       type: addType,
+      metodo: addType === 'TERCERO' ? addMetodo : undefined,
       origenAccountId: addOrigen,
       origenNickname: origenAcc?.nickname || '',
       origenAccountNumber: origenAcc?.accountNumber || '',
@@ -576,6 +582,14 @@ export default function TransferenciasProgramadas() {
                   {detailTransfer.destinoBankName}
                 </span>
               </div>
+              {detailTransfer.metodo && (
+                <div className="flex justify-between gap-4">
+                  <span style={{ color: colors.textSecondary }}>Método</span>
+                  <span className="font-semibold text-right" style={{ color: colors.textPrimary }}>
+                    {detailTransfer.metodo}
+                  </span>
+                </div>
+              )}
               {detailTransfer.concepto && (
                 <div className="flex justify-between gap-4">
                   <span style={{ color: colors.textSecondary }}>Concepto</span>
@@ -754,13 +768,14 @@ export default function TransferenciasProgramadas() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Origen y Destino */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <AccountSelect
                 label="Origen"
                 value={addOrigen}
                 onChange={(id) => { setAddOrigen(id); setAddErrors((prev) => ({ ...prev, origen: '' })); }}
                 accounts={accounts}
-                placeholder="Selecciona cuenta origen"
+                placeholder="Selecciona un producto origen"
                 error={addErrors.origen}
                 excludeId={addType === 'PROPIA' ? addDestinoCuenta : undefined}
               />
@@ -771,7 +786,7 @@ export default function TransferenciasProgramadas() {
                   value={addDestinoCuenta}
                   onChange={(id) => { setAddDestinoCuenta(id); setAddErrors((prev) => ({ ...prev, destino: '' })); }}
                   accounts={accounts}
-                  placeholder="Selecciona cuenta destino"
+                  placeholder="Selecciona un producto destino"
                   error={addErrors.destino}
                   excludeId={addOrigen}
                 />
@@ -781,11 +796,14 @@ export default function TransferenciasProgramadas() {
                   value={addDestinoBeneficiario}
                   onChange={(id) => { setAddDestinoBeneficiario(id); setAddErrors((prev) => ({ ...prev, destino: '' })); }}
                   beneficiaries={beneficiaries}
-                  placeholder="Selecciona beneficiario"
+                  placeholder="Selecciona un producto destino"
                   error={addErrors.destino}
                 />
               )}
+            </div>
 
+            {/* Monto y Concepto */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               {/* Monto */}
               <div>
                 <label className="block text-sm font-semibold mb-2" style={{ color: colors.textPrimary }}>
@@ -793,7 +811,7 @@ export default function TransferenciasProgramadas() {
                 </label>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: colors.grey500 }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: colors.primary }}>
                       <line x1="12" y1="1" x2="12" y2="23" />
                       <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                     </svg>
@@ -801,7 +819,7 @@ export default function TransferenciasProgramadas() {
                   <input
                     type="text"
                     inputMode="decimal"
-                    placeholder="Digite el monto"
+                    placeholder="Digite el monto a transferir"
                     value={formatInputAmount(addMonto)}
                     onChange={(e) => {
                       setAddMonto(e.target.value.replace(/[^0-9.]/g, ''));
@@ -828,8 +846,41 @@ export default function TransferenciasProgramadas() {
                   style={{ borderColor: colors.border }}
                 />
               </div>
+            </div>
 
-              <FrecuenciaSelect value={addFrecuencia} onChange={setAddFrecuencia} />
+            {/* Método, Fecha de inicio y Frecuencia */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Método (solo para transferencias a terceros) */}
+              {addType === 'TERCERO' ? (
+                <div>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: colors.textPrimary }}>
+                    Método
+                  </label>
+                  <div className="flex gap-3">
+                    {(['ACH', 'LBTR'] as Metodo[]).map((m) => (
+                      <button
+                        key={m}
+                        type="button"
+                        onClick={() => {
+                          setAddMetodo(m);
+                          setAddErrors((prev) => ({ ...prev, metodo: '' }));
+                        }}
+                        className="px-6 py-3 rounded-xl border-2 font-bold transition-all text-sm"
+                        style={{
+                          borderColor: addMetodo === m ? colors.primary : colors.grey400,
+                          color: addMetodo === m ? colors.primary : colors.grey400,
+                          backgroundColor: 'white',
+                        }}
+                      >
+                        {m}
+                      </button>
+                    ))}
+                  </div>
+                  {addErrors.metodo && <p className="text-sm mt-1" style={{ color: colors.error }}>{addErrors.metodo}</p>}
+                </div>
+              ) : (
+                <div /> // Espacio vacío cuando no es TERCERO
+              )}
 
               {/* Fecha inicio */}
               <div>
@@ -848,6 +899,8 @@ export default function TransferenciasProgramadas() {
                 />
                 {addErrors.startDate && <p className="text-sm mt-1" style={{ color: colors.error }}>{addErrors.startDate}</p>}
               </div>
+
+              <FrecuenciaSelect value={addFrecuencia} onChange={setAddFrecuencia} />
             </div>
 
             <div className="flex justify-end gap-4 mt-8">

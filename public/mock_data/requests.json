@@ -1,0 +1,79 @@
+{
+  "requests": [
+    {
+      "id": "req-001",
+      "userId": "user-001",
+      "type": "Tarjeta de crédito",
+      "productType": "credit_card",
+      "status": "Pendiente",
+      "requestDate": "2026-02-05T10:30:00Z",
+      "lastUpdate": "2026-02-08T14:20:00Z",
+      "description": "Solicitud de tarjeta de crédito Visa Platinum",
+      "amount": 150000,
+      "notes": "En revisión por el departamento de crédito"
+    },
+    {
+      "id": "req-002",
+      "userId": "user-001",
+      "type": "Préstamo personal",
+      "productType": "loan",
+      "status": "Aprobado",
+      "requestDate": "2026-01-28T09:15:00Z",
+      "lastUpdate": "2026-02-01T11:45:00Z",
+      "approvedDate": "2026-02-01T11:45:00Z",
+      "description": "Préstamo personal para remodelación",
+      "amount": 500000,
+      "interestRate": 12.5,
+      "term": 36,
+      "notes": "Aprobado - Pendiente de desembolso"
+    },
+    {
+      "id": "req-003",
+      "userId": "user-001",
+      "type": "Cuenta digital",
+      "productType": "account",
+      "status": "Completado",
+      "requestDate": "2026-01-15T13:20:00Z",
+      "lastUpdate": "2026-01-16T10:00:00Z",
+      "approvedDate": "2026-01-15T16:30:00Z",
+      "completedDate": "2026-01-16T10:00:00Z",
+      "description": "Apertura de cuenta de ahorros digital",
+      "accountNumber": "001028765432109",
+      "notes": "Cuenta activada y lista para usar"
+    }
+  ],
+  "requestTypes": [
+    {
+      "id": "credit_card",
+      "name": "Tarjeta de crédito",
+      "description": "Solicita una tarjeta de crédito ADEMI",
+      "icon": "tabler-icon-credit-card.svg",
+      "category": "financial_product",
+      "enabled": true
+    },
+    {
+      "id": "loan",
+      "name": "Préstamo",
+      "description": "Solicita un préstamo personal o hipotecario",
+      "icon": "tabler-icon-receipt.svg",
+      "category": "financial_product",
+      "enabled": true
+    },
+    {
+      "id": "digital_account",
+      "name": "Cuenta digital",
+      "description": "Abre una cuenta digital sin visitar sucursal",
+      "icon": "tabler-icon-wallet.svg",
+      "category": "account",
+      "enabled": true
+    },
+    {
+      "id": "certificate",
+      "name": "Certificado",
+      "description": "Solicita certificados bancarios",
+      "icon": "tabler-icon-certificate.svg",
+      "category": "document",
+      "enabled": true
+    }
+  ]
+}
