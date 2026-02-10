@@ -1,0 +1,48 @@
+{
+  "settingsOptions": [
+    {
+      "id": "security",
+      "name": "Seguridad",
+      "description": "Gestiona la seguridad de tu cuenta",
+      "icon": "tabler-icon-lock.svg",
+      "route": "/configuracion/seguridad",
+      "enabled": true
+    },
+    {
+      "id": "account",
+      "name": "Cuenta",
+      "description": "Administra la información de tu cuenta",
+      "icon": "tabler-icon-user.svg",
+      "route": "/configuracion/cuenta",
+      "enabled": true
+    },
+    {
+      "id": "other_settings",
+      "name": "Otras configuraciones",
+      "description": "Preferencias adicionales y configuraciones avanzadas",
+      "icon": "tabler-icon-settings.svg",
+      "route": "/configuracion/otras",
+      "enabled": true
+    },
+    {
+      "id": "rate_app",
+      "name": "Califica nuestra app",
+      "description": "Comparte tu opinión sobre nuestra aplicación",
+      "icon": "tabler-icon-star.svg",
+      "route": "/configuracion/calificar",
+      "enabled": true
+    }
+  ],
+  "securitySettings": {
+    "twoFactorEnabled": true,
+    "biometricEnabled": true,
+    "lastPasswordChange": "2026-01-15",
+    "activeDevices": 3
+  },
+  "notificationSettings": {
+    "emailNotifications": true,
+    "pushNotifications": true,
+    "smsNotifications": false,
+    "transactionAlerts": true
+  }
+}

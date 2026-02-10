@@ -1,111 +1,163 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { colors } from '@/styles/colors';
 
+interface Request {
+  id: string;
+  userId: string;
+  type: string;
+  productType: string;
+  status: string;
+  requestDate: string;
+  lastUpdate: string;
+  description: string;
+  amount?: number;
+  notes: string;
+}
+
+interface RequestType {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  category: string;
+  enabled: boolean;
+}
+
 export default function Solicitudes() {
-  const requests = [
-    {
-      id: 1,
-      type: 'Tarjeta de Crédito',
-      date: '05 Feb 2026',
-      status: 'En proceso',
-      statusColor: colors.warning,
-    },
-    {
-      id: 2,
-      type: 'Préstamo Personal',
-      date: '01 Feb 2026',
-      status: 'Aprobado',
-      statusColor: colors.success,
-    },
-    {
-      id: 3,
-      type: 'Chequera',
-      date: '28 Ene 2026',
-      status: 'Completado',
-      statusColor: colors.info,
-    },
-  ];
+  const [myRequests, setMyRequests] = useState<Request[]>([]);
+  const [requestTypes, setRequestTypes] = useState<RequestType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/mock_data/requests.json')
+      .then(res => res.json())
+      .then(data => {
+        // Filtrar solo solicitudes pendientes para "Mis solicitudes"
+        const pendingRequests = data.requests.filter((req: Request) => req.status === 'Pendiente');
+        setMyRequests(pendingRequests);
+        setRequestTypes(data.requestTypes);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error loading requests:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Pendiente':
+        return colors.warning;
+      case 'Aprobado':
+        return colors.success;
+      case 'Completado':
+        return colors.info;
+      case 'Rechazado':
+        return colors.error;
+      default:
+        return colors.grey500;
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: colors.background }}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4" style={{ borderColor: colors.primary }}></div>
+          <p style={{ color: colors.textSecondary }}>Cargando solicitudes...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold" style={{ color: colors.textPrimary }}>
-          Solicitudes
-        </h1>
-        <p className="text-gray-600 mt-2">
-          Gestiona tus solicitudes de productos y servicios
-        </p>
-      </div>
+    <div className="min-h-screen" style={{ backgroundColor: colors.background }}>
+      <div className="max-w-7xl mx-auto p-6">
+        {/* Mis solicitudes */}
+        {myRequests.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold mb-4" style={{ color: colors.textPrimary }}>
+              Mis solicitudes
+            </h2>
+            <div className="space-y-3">
+              {myRequests.map((request) => (
+                <div
+                  key={request.id}
+                  className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div
+                        className="w-12 h-12 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: colors.primary + '15' }}
+                      >
+                        <Image
+                          src="/icon/tabler/tabler-icon-credit-card.svg"
+                          alt={request.type}
+                          width={24}
+                          height={24}
+                          style={{
+                            filter: 'brightness(0) saturate(100%) invert(47%) sepia(65%) saturate(1195%) hue-rotate(152deg) brightness(91%) contrast(101%)'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold" style={{ color: colors.textPrimary }}>
+                          {request.type}
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-full" style={{ backgroundColor: colors.warning + '15' }}>
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: colors.warning }}></div>
+                      <span className="text-sm font-semibold" style={{ color: colors.warning }}>
+                        {request.status}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
-      {/* Nueva Solicitud */}
-      <div className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-        <h2 className="text-xl font-bold mb-4" style={{ color: colors.textPrimary }}>
-          Nueva Solicitud
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button
-            className="p-6 border-2 rounded-lg hover:border-opacity-100 transition-all"
-            style={{ borderColor: colors.primary, color: colors.primary }}
-          >
-            <div className="text-center">
-              <div className="text-3xl mb-2">💳</div>
-              <div className="font-bold">Tarjeta de Crédito</div>
-            </div>
-          </button>
-          <button
-            className="p-6 border-2 rounded-lg hover:border-opacity-100 transition-all"
-            style={{ borderColor: colors.primary, color: colors.primary }}
-          >
-            <div className="text-center">
-              <div className="text-3xl mb-2">💰</div>
-              <div className="font-bold">Préstamo</div>
-            </div>
-          </button>
-          <button
-            className="p-6 border-2 rounded-lg hover:border-opacity-100 transition-all"
-            style={{ borderColor: colors.primary, color: colors.primary }}
-          >
-            <div className="text-center">
-              <div className="text-3xl mb-2">📄</div>
-              <div className="font-bold">Chequera</div>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      {/* Solicitudes Recientes */}
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-        <div className="p-6 border-b" style={{ borderColor: colors.border }}>
-          <h2 className="text-xl font-bold" style={{ color: colors.textPrimary }}>
-            Solicitudes Recientes
+        {/* Solicitar */}
+        <div>
+          <h2 className="text-2xl font-bold mb-4" style={{ color: colors.textPrimary }}>
+            Solicitar
           </h2>
-        </div>
-        <div className="divide-y" style={{ borderColor: colors.border }}>
-          {requests.map((request) => (
-            <div key={request.id} className="p-6 hover:bg-gray-50 transition-colors">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="font-bold text-lg" style={{ color: colors.textPrimary }}>
-                    {request.type}
-                  </h3>
-                  <p className="text-sm" style={{ color: colors.textSecondary }}>
-                    Solicitado el {request.date}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <span
-                    className="px-4 py-2 rounded-full text-sm font-bold"
-                    style={{
-                      backgroundColor: `${request.statusColor}20`,
-                      color: request.statusColor,
-                    }}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {requestTypes.map((requestType) => (
+              <button
+                key={requestType.id}
+                className="bg-white rounded-2xl p-6 hover:shadow-lg transition-all duration-200 text-left group"
+              >
+                <div className="flex items-center gap-4">
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center transition-colors group-hover:scale-110 duration-200"
+                    style={{ backgroundColor: colors.primary + '15' }}
                   >
-                    {request.status}
-                  </span>
+                    <Image
+                      src={`/icon/tabler/${requestType.icon}`}
+                      alt={requestType.name}
+                      width={24}
+                      height={24}
+                      style={{
+                        filter: 'brightness(0) saturate(100%) invert(47%) sepia(65%) saturate(1195%) hue-rotate(152deg) brightness(91%) contrast(101%)'
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold" style={{ color: colors.textPrimary }}>
+                      {requestType.name}
+                    </h3>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

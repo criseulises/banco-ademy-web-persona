@@ -1,0 +1,74 @@
+{
+  "accountExecutive": {
+    "id": "exec-001",
+    "name": "María Ramírez",
+    "email": "mramirez@bancoademi.com.do",
+    "phone": "+1 (809) 555-1234",
+    "position": "Ejecutivo de cuentas",
+    "avatar": "/avatar/maria-ramirez.jpg"
+  },
+  "socialNetworks": [
+    {
+      "id": "whatsapp",
+      "name": "WhatsApp",
+      "icon": "tabler-icon-brand-whatsapp.svg",
+      "url": "https://wa.me/18095551234",
+      "color": "#25D366"
+    },
+    {
+      "id": "email",
+      "name": "Email",
+      "icon": "tabler-icon-mail.svg",
+      "url": "mailto:atencion@bancoademi.com.do",
+      "color": "#EA4335"
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "icon": "tabler-icon-brand-instagram.svg",
+      "url": "https://instagram.com/bancoademi",
+      "color": "#E4405F"
+    },
+    {
+      "id": "facebook",
+      "name": "Facebook",
+      "icon": "tabler-icon-brand-facebook.svg",
+      "url": "https://facebook.com/bancoademi",
+      "color": "#1877F2"
+    },
+    {
+      "id": "tiktok",
+      "name": "Tik Tok",
+      "icon": "tabler-icon-brand-tiktok.svg",
+      "url": "https://tiktok.com/@bancoademi",
+      "color": "#000000"
+    },
+    {
+      "id": "twitter",
+      "name": "X",
+      "icon": "tabler-icon-brand-x.svg",
+      "url": "https://x.com/bancoademi",
+      "color": "#000000"
+    },
+    {
+      "id": "linkedin",
+      "name": "Linkedin",
+      "icon": "tabler-icon-brand-linkedin.svg",
+      "url": "https://linkedin.com/company/bancoademi",
+      "color": "#0A66C2"
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube",
+      "icon": "tabler-icon-brand-youtube.svg",
+      "url": "https://youtube.com/@bancoademi",
+      "color": "#FF0000"
+    }
+  ],
+  "contactInfo": {
+    "phone": "809-555-ADEMI (23364)",
+    "email": "atencion@bancoademi.com.do",
+    "address": "Av. Winston Churchill #1100, Santo Domingo, D.N.",
+    "schedule": "Lun-Vie: 8:00 AM - 6:00 PM, Sáb: 9:00 AM - 1:00 PM"
+  }
+}

@@ -655,7 +655,6 @@ export default function Beneficiarios() {
                   {[
                     { value: 'CUENTA_ADEMI', label: 'ADEMI' },
                     { value: 'OTRA_CUENTA', label: 'Otro banco' },
-                    { value: 'SERVICIO', label: 'Servicio' },
                   ].map((t) => (
                     <button
                       key={t.value}
@@ -663,7 +662,7 @@ export default function Beneficiarios() {
                       onClick={() =>
                         setForm({
                           ...form,
-                          type: t.value as 'CUENTA_ADEMI' | 'OTRA_CUENTA' | 'SERVICIO',
+                          type: t.value as 'CUENTA_ADEMI' | 'OTRA_CUENTA',
                         })
                       }
                       className="flex-1 py-2.5 rounded-lg border-2 font-semibold text-sm transition-all"
